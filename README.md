@@ -3,6 +3,7 @@
 
 ```bash
     # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#deploymentspec-v1-apps
+    # https://kubernetes.io/docs/reference/using-api/api-concepts/
     
     # Check all possible clusters, as your .KUBECONFIG may have multiple contexts:
     kubectl config view -o jsonpath='{"Cluster name\tServer\n"}{range .clusters[*]}{.name}{"\t"}{.cluster.server}{"\n"}{end}'
