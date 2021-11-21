@@ -21,3 +21,62 @@
     curl -X GET $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure
 
 ```
+
+
+kubectl command
+
+```bash
+
+$ echo 'apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-example
+spec:
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14
+        ports:
+        - containerPort: 80
+' | kubectl create -f -
+
+```
+
+curl command (requires kubectl proxy to be running)
+
+```bash
+
+$ kubectl proxy
+$ curl -X POST -H 'Content-Type: application/yaml' --data '
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-example
+spec:
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14
+        ports:
+        - containerPort: 80
+' http://127.0.0.1:8001/apis/apps/v1/namespaces/default/deployments
+
+```
